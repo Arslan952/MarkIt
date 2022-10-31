@@ -33,7 +33,7 @@ class _IntroductioScreenState extends State<IntroductioScreen> {
                     child: Container(
                       width: double.infinity,
                       child: const Image(
-                        image: AssetImage("assets/facial.jpg"),
+                        image: AssetImage("assets/facial.png"),
                       ),
                     ),
                   ),
@@ -62,7 +62,6 @@ class _IntroductioScreenState extends State<IntroductioScreen> {
                         ),
                       ),
                   ),
-
                 ],
               ),
             ),
@@ -74,7 +73,7 @@ class _IntroductioScreenState extends State<IntroductioScreen> {
                     child: Container(
                       width: double.infinity,
                       child: const Image(
-                        image: AssetImage("assets/idcard.jpg"),
+                        image: AssetImage("assets/idcard.png"),
                       ),
                     ),
                   ),
@@ -115,7 +114,7 @@ class _IntroductioScreenState extends State<IntroductioScreen> {
                     child: Container(
                       width: double.infinity,
                       child: const Image(
-                        image: AssetImage("assets/management.jpg"),
+                        image: AssetImage("assets/management.png"),
                       ),
                     ),
                   ),
@@ -165,8 +164,9 @@ class _IntroductioScreenState extends State<IntroductioScreen> {
                   controller: _controller,
                   count: 3,
                   effect: ExpandingDotsEffect(
-                      activeDotColor: Colors.indigoAccent,
-                      dotColor: Colors.indigoAccent.withOpacity(0.7)),
+                      activeDotColor: Color(0xffff928e),
+                      dotColor:  Color(0xff7d91f4),
+                  ),
                 ),
                 onLastPage
                     ? GestureDetector(

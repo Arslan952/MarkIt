@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:markit/screens/login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,12 +16,44 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          // Container(
+          //   decoration: const BoxDecoration(
+          //       image: DecorationImage(
+          //           alignment: Alignment.topCenter,
+          //           image: AssetImage("assets/back.png"))),
+          // ),
           Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    alignment: Alignment.topCenter,
-                    image: AssetImage("assets/back.png"))),
+            height: MediaQuery.of(context).size.height * 1,
+            width: MediaQuery.of(context).size.width * 1,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  right: -100,
+                  top: -120,
+                  child: Container(
+                    height: 400,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Color(0xffff928e),
+                      borderRadius: BorderRadius.all(Radius.circular(99999)),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: -100,
+                  top: -150,
+                  child: Container(
+                    height: 400,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Color(0xff7d91f4),
+                      borderRadius: BorderRadius.all(Radius.circular(99999)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           SafeArea(
             child: Padding(
@@ -31,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin: const EdgeInsets.only(bottom: 25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Row(
                           children: [
@@ -65,8 +98,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         IconButton(
 
                           color: Colors.white,
-                          onPressed: () {  },
-                          icon: Icon(Icons.menu),
+                          onPressed: () {
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                            };
+                          },
+                          icon: Icon(Icons.exit_to_app),
                            )
                       ],
                     ),
