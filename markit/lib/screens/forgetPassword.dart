@@ -57,7 +57,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       fontSize: 36),
                 ),
               ),
-              Image(image: AssetImage("assets/forget.jpg")),
+              Image(image: AssetImage("assets/forget.png")),
               Form(
 
                 child: Padding(
