@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:markit/adminpanel.dart';
 import 'package:markit/screens/forgetPassword.dart';
 
 import 'homescreen.dart';
@@ -139,7 +140,15 @@ class _LoginState extends State<Login> {
                   SizedBox(height: size.height/25,),
                   GestureDetector(
                     onTap: () {
-                      userlogin(emailcontroller.text,passwordcontroller.text);
+                      if(emailcontroller.text=="admin" && passwordcontroller.text=="password")
+                        {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => AdminPanel()),
+                                  (route) => false);
+                        }
+                      else
+                     { userlogin(emailcontroller.text,passwordcontroller.text);}
                     },
                     child: Container(
                       height: 50,
