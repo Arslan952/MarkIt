@@ -12,7 +12,7 @@ class UserData extends StatefulWidget {
 
 class _UserDataState extends State<UserData> {
   final CollectionReference _reference =
-  FirebaseFirestore.instance.collection('user');
+  FirebaseFirestore.instance.collection('User');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _UserDataState extends State<UserData> {
          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
            if (snapshot.hasError) {
              return Center(
-               child: Text('Some Error occured ${snapshot.error}'),
+               child: Text('Some Error occurred ${snapshot.error}'),
              );
            }
            if (snapshot.hasData) {
@@ -135,7 +135,10 @@ class _UserDataState extends State<UserData> {
          ),
        );
            }
-           return CircularProgressIndicator();
+           return Center(child:  CircularProgressIndicator(
+             backgroundColor: Color(0xffff928e),
+             color: Color(0xff7d91f4),
+           ),);
          },
        ),
 

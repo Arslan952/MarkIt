@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:markit/screens/login.dart';
@@ -10,6 +11,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+  //To do List
+  CollectionReference usersCollection =
+  FirebaseFirestore.instance.collection('User');
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     height: 400,
                     width: 400,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xffff928e),
                       borderRadius: BorderRadius.all(Radius.circular(99999)),
                     ),
@@ -46,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     height: 400,
                     width: 400,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xff7d91f4),
                       borderRadius: BorderRadius.all(Radius.circular(99999)),
                     ),
@@ -63,7 +69,65 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     height: 64,
                     margin: const EdgeInsets.only(bottom: 25),
-                    child: Row(
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: usersCollection.doc(user?.uid).snapshots(),
+                      builder:  (context, streamSnapshot){
+                        if (streamSnapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Color(0xffff928e),
+                              color: Color(0xff7d91f4),
+                            )
+                          );
+                        }
+                        return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                             CircleAvatar(
+                              radius: 32,
+                              backgroundImage:NetworkImage( streamSnapshot.data!['image'],)
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:  [
+                                  Text(
+                                 streamSnapshot.data!['firstname'],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: Colors.white),
+                                  ),
+                                  Text(
+                                    streamSnapshot.data!['userid'],
+                                    style: const TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        IconButton(
+
+                          color: Colors.white,
+                          onPressed: () {
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+                            };
+                          },
+                          icon: const Icon(Icons.exit_to_app),
+                           )
+                      ],
+                    );
+                      }
+                    )
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
@@ -107,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icon(Icons.exit_to_app),
                            )
                       ],
-                    ),
+                    ),*/
                   ),
                   Expanded(
                     child: GridView.count(

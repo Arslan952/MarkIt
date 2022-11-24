@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -172,8 +173,27 @@ class _AddUserState extends State<AddUser> {
                             return;
                           }
                           if(key.currentState!.validate()){
+                            try{
+                              FirebaseAuth auth=FirebaseAuth.instance;
+                              User? user=FirebaseAuth.instance.currentUser;
+                              auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text).then((signinUser) =>{
+                                FirebaseFirestore.instance.collection('User').doc(signinUser.user!.uid).set({
+
+                                  'firstname':fnamecontroller.text,
+                                  'lastname':lnamecontroller.text,
+                                  'userid':idcontroller.text,
+                                  'email':emailcontroller.text,
+                                  'password':passwordcontroller.text,
+                                  'image':imageUrl,
+                                })
+                              });
+                            }
+                            catch(e)
+                          {
+                            print(e);
+                          }
                             //Map
-                            Map<String,String> itemToAdd={
+                          /*  Map<String,String> itemToAdd={
                               'firstname':fnamecontroller.text,
                               'lastname':lnamecontroller.text,
                               'userid':idcontroller.text,
@@ -184,7 +204,7 @@ class _AddUserState extends State<AddUser> {
                             //Collection Reference
                             CollectionReference ref=FirebaseFirestore.instance.collection('user');
                             //Add a document with custom id
-                            ref.doc(fnamecontroller.text).set(itemToAdd);
+                            ref.doc(fnamecontroller.text).set(itemToAdd);*/
 
 
                           }
@@ -217,7 +237,7 @@ class _AddUserState extends State<AddUser> {
                         onPressed: ()
                         async {
                           try {
-                            firebase.collection('user').doc(fnamecontroller.text).delete();
+                            firebase.collection('User').doc(fnamecontroller.text).delete();
                           } catch (e) {
                             print(e);
                           }
