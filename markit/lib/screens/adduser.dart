@@ -20,6 +20,14 @@ class _AddUserState extends State<AddUser> {
   final passwordcontroller = TextEditingController();
   final firebase=FirebaseFirestore.instance;
   GlobalKey<FormState> key=GlobalKey();
+  void clearText() {
+    fnamecontroller.clear();
+    lnamecontroller.clear();
+    idcontroller.clear();
+    emailcontroller.clear();
+    passwordcontroller.clear();
+
+  }
   @override
   String imageUrl='';
   Widget build(BuildContext context) {
@@ -42,6 +50,7 @@ class _AddUserState extends State<AddUser> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller:fnamecontroller,
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter Name';
@@ -60,6 +69,7 @@ class _AddUserState extends State<AddUser> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller:lnamecontroller,
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter Name';
@@ -78,6 +88,7 @@ class _AddUserState extends State<AddUser> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller:idcontroller,
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter Id';
@@ -96,6 +107,7 @@ class _AddUserState extends State<AddUser> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller:emailcontroller,
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter Email';
@@ -162,38 +174,36 @@ class _AddUserState extends State<AddUser> {
                     ),
                   ),
                   SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: ()  async{
-                          if(imageUrl.isEmpty)
-                          {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Upload an Image")));
-                            return;
-                          }
-                          if(key.currentState!.validate()){
-                            try{
-                              FirebaseAuth auth=FirebaseAuth.instance;
-                              User? user=FirebaseAuth.instance.currentUser;
-                              auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text).then((signinUser) =>{
-                                FirebaseFirestore.instance.collection('User').doc(signinUser.user!.uid).set({
+                  GestureDetector(
+                    onTap: ()
+                    async{
+                      if(imageUrl.isEmpty)
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Upload an Image")));
+                        return;
+                      }
+                      if(key.currentState!.validate()){
+                        try{
+                          FirebaseAuth auth=FirebaseAuth.instance;
+                          User? user=FirebaseAuth.instance.currentUser;
+                          auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text).then((signinUser) =>{
+                            FirebaseFirestore.instance.collection('User').doc(signinUser.user!.uid).set({
 
-                                  'firstname':fnamecontroller.text,
-                                  'lastname':lnamecontroller.text,
-                                  'userid':idcontroller.text,
-                                  'email':emailcontroller.text,
-                                  'password':passwordcontroller.text,
-                                  'image':imageUrl,
-                                })
-                              });
-                            }
-                            catch(e)
-                          {
-                            print(e);
-                          }
-                            //Map
-                          /*  Map<String,String> itemToAdd={
+                              'firstname':fnamecontroller.text,
+                              'lastname':lnamecontroller.text,
+                              'userid':idcontroller.text,
+                              'email':emailcontroller.text,
+                              'password':passwordcontroller.text,
+                              'image':imageUrl,
+                            })
+                          });
+                        }
+                        catch(e)
+                        {
+                          print(e);
+                        }
+                        //Map
+                        /*  Map<String,String> itemToAdd={
                               'firstname':fnamecontroller.text,
                               'lastname':lnamecontroller.text,
                               'userid':idcontroller.text,
@@ -207,47 +217,54 @@ class _AddUserState extends State<AddUser> {
                             ref.doc(fnamecontroller.text).set(itemToAdd);*/
 
 
-                          }
-                        },
-                        child: Text('Create'),
-                        style: TextButton.styleFrom(backgroundColor: Colors.green),
+                      }
+
+                    },
+
+                    child: Container(
+                      height: 50,
+                      margin: const EdgeInsets.symmetric(horizontal: 50),
+                      decoration: BoxDecoration(
+                          color: Colors.indigoAccent,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text(
+                          "Save",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      ElevatedButton(
-                        onPressed: ()
-                        async{
-
-                          try {
-                            firebase.collection('User').doc(fnamecontroller.text).update({
-                              'lastname':lnamecontroller.text,
-                              'userid':idcontroller.text,
-                              'email':emailcontroller.text,
-                              'password':passwordcontroller.text,
-                              'image':imageUrl,
-
-                            });
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
-
-                        child: Text('Update'),
-                        style: TextButton.styleFrom(backgroundColor: Colors.amber),
-                      ),
-                      ElevatedButton(
-                        onPressed: ()
-                        async {
-                          try {
-                            firebase.collection('User').doc(fnamecontroller.text).delete();
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
-
-                        child: Text('Delete'),
-                        style: TextButton.styleFrom(backgroundColor: Colors.red),
-                      ),
-                    ],
+                    ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  GestureDetector(
+                    onTap: ()
+                   {
+                     clearText();
+                   },
+
+                    child: Container(
+                      height: 50,
+                      margin: const EdgeInsets.symmetric(horizontal: 50),
+                      decoration: BoxDecoration(
+                          color: Colors.indigoAccent,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text(
+                          "Reset Fields",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+
 
                 ],
 

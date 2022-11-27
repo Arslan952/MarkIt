@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:markit/screens/updateuser.dart';
 
 import 'adduser.dart';
+
 class UserData extends StatefulWidget {
   const UserData({Key? key}) : super(key: key);
 
@@ -11,26 +13,30 @@ class UserData extends StatefulWidget {
 }
 
 class _UserDataState extends State<UserData> {
-  final CollectionReference _reference =
-  FirebaseFirestore.instance.collection('User');
+  final Stream<QuerySnapshot> _stream =
+      FirebaseFirestore.instance.collection('User').snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       body: FutureBuilder<QuerySnapshot>(
-         future: _reference.get(),
-         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-           if (snapshot.hasError) {
-             return Center(
-               child: Text('Some Error occurred ${snapshot.error}'),
-             );
-           }
-           if (snapshot.hasData) {
-             //Get Data
-             QuerySnapshot querySnapshot = snapshot.data;
-             List<QueryDocumentSnapshot> document = querySnapshot.docs;
-             //Convert to a List Map
-             List<Map> item = document.map((e) => e.data() as Map).toList();
-             return  SafeArea(
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _stream,
+          builder:
+              (context,snapshot) {
+            if(snapshot.hasError){
+              print("Some thing went wrong");
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Color(0xffff928e),
+                    color: Color(0xff7d91f4),
+                  )
+              );
+            }
+
+
+            return  SafeArea(
          child: Column(
            children: [
              Padding(
@@ -49,11 +55,11 @@ class _UserDataState extends State<UserData> {
                child: Padding(
                  padding: EdgeInsets.all(20),
                  child: ListView.builder(
-                     itemCount: item.length,
+                     itemCount: snapshot.data!.docs.length,
                      shrinkWrap: true,
                      physics: ScrollPhysics(),
                      itemBuilder: (context, index) {
-                       Map thisItem = item[index];
+                       DocumentSnapshot doc = snapshot.data!.docs[index];
                        return Slidable(
                          startActionPane: ActionPane(
                            motion: BehindMotion(),
@@ -63,7 +69,7 @@ class _UserDataState extends State<UserData> {
                                  Navigator.push(
                                    context,
                                    MaterialPageRoute(
-                                       builder: (context) => AddUser()),
+                                       builder: (context) => UpdateUser(id:doc.id)),
                                  );
                                },
                                icon: Icons.update,
@@ -71,13 +77,15 @@ class _UserDataState extends State<UserData> {
                                backgroundColor: Colors.blue,
                              ),
                              SlidableAction(
-                               onPressed: (context) {
-                                 Navigator.push(
-                                   context,
-                                   MaterialPageRoute(
-                                       builder: (context) => AddUser()),
-                                 );
-                               },
+                               onPressed: (context)
+                                 async {
+                                   try {
+                                     FirebaseFirestore.instance.collection('User').doc(doc.id).delete();
+                                   } catch (e) {
+                                     print(e);
+                                   }
+                                 },
+
                                icon: Icons.delete,
                                label: "Delete",
                                backgroundColor: Colors.red,
@@ -89,7 +97,7 @@ class _UserDataState extends State<UserData> {
                              fit: BoxFit.contain,
                              child: CircleAvatar(
                                radius: 80,
-                               backgroundImage: NetworkImage('${thisItem['image']}'),
+                               backgroundImage: NetworkImage(doc['image']),
                              ),
                            ),
                            /* thisItem.containsKey('image')
@@ -97,11 +105,12 @@ class _UserDataState extends State<UserData> {
                                     : Container(
                                         color: Colors.indigo,
                                       ),*/
-                           title: Text('${thisItem['firstname']}'),
-                           subtitle: Text('${thisItem['userid']}'),
+                           title: Text(doc['firstname']),
+                           subtitle: Text(doc['userid']),
                          ),
                        );
                      }),
+
                ),
              ),
              SizedBox(
@@ -134,14 +143,8 @@ class _UserDataState extends State<UserData> {
            ],
          ),
        );
-           }
-           return Center(child:  CircularProgressIndicator(
-             backgroundColor: Color(0xffff928e),
-             color: Color(0xff7d91f4),
-           ),);
-         },
-       ),
-
+              }),
     );
   }
 }
+
