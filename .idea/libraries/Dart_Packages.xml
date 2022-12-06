@@ -16,6 +16,13 @@
             </list>
           </value>
         </entry>
+        <entry key="avatar_glow">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/avatar_glow-2.0.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="boolean_selector">
           <value>
             <list>
@@ -219,6 +226,13 @@
             </list>
           </value>
         </entry>
+        <entry key="font_awesome_flutter">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-10.3.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="google_fonts">
           <value>
             <list>
@@ -286,6 +300,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="line_awesome_flutter">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/line_awesome_flutter-2.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -511,6 +532,7 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/_flutterfire_internals-1.0.7/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.9.0/lib" />
+      <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/avatar_glow-2.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.1/lib" />
@@ -537,6 +559,7 @@
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_slidable-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.6/lib" />
+      <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-10.3.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.2/lib" />
@@ -547,6 +570,7 @@
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-2.6.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4/lib" />
+      <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/line_awesome_flutter-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.12/lib" />
       <root url="file://$PROJECT_DIR$/../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.5/lib" />

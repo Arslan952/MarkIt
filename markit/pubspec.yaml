@@ -37,8 +37,11 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   google_fonts: ^3.0.1
   firebase_core: ^2.1.1
+  font_awesome_flutter: ^10.3.0
   firebase_auth: ^4.1.0
   flutter_svg: ^1.1.6
+  avatar_glow: ^2.0.2
+  line_awesome_flutter: ^2.0.0
   cloud_firestore: ^4.0.4
   image_picker: ^0.8.6
   firebase_storage: ^11.0.4

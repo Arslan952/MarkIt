@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:markit/adminpanel.dart';
 import 'package:markit/screens/forgetPassword.dart';
 
@@ -16,20 +18,23 @@ class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
   var email = "";
   var password = "";
+  bool _obsecuretext = true;
+
   //Text editing controller
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     //User login function through Firebase
-    userlogin(String email,String password) async {
+    userlogin(String email, String password) async {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
-                (route) => false);
+            (route) => false);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -52,6 +57,7 @@ class _LoginState extends State<Login> {
           MaterialPageRoute(builder: (context) => const HomeScreen()),
               (route) => false);*/
     }
+
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -70,21 +76,26 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height/20,
+                    height: size.height / 20,
                   ),
-                  const Center(
+                   Center(
                     child: Text(
                       "Login with email",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: GoogleFonts.poppins(
+                          textStyle:  const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            color: Colors.black87
+                          )),
+
+                         /* TextStyle(fontSize: 22, fontWeight: FontWeight.bold),*/
                     ),
                   ),
-                 Container(
+                  Container(
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.indigoAccent))),
+                        border: Border(
+                            bottom: BorderSide(color: Colors.indigoAccent))),
                     child: TextFormField(
                       autofocus: false,
                       controller: emailcontroller,
@@ -98,6 +109,8 @@ class _LoginState extends State<Login> {
                         return null;
                       },
                       decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.envelope,
+                        color: Colors.indigoAccent,),
                           hintText: "Enter your Email",
                           hintStyle: TextStyle(color: Colors.black45),
                           border: InputBorder.none),
@@ -106,10 +119,11 @@ class _LoginState extends State<Login> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.indigoAccent))),
+                        border: Border(
+                            bottom: BorderSide(color: Colors.indigoAccent))),
                     child: TextFormField(
                       autofocus: false,
-                      obscureText: true,
+                      obscureText: _obsecuretext,
                       textInputAction: TextInputAction.done,
                       controller: passwordcontroller,
                       validator: (value) {
@@ -118,13 +132,27 @@ class _LoginState extends State<Login> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.fingerprint,
+                        color: Colors.indigoAccent,),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obsecuretext = !_obsecuretext;
+                              });
+                            },
+                            child: Icon(_obsecuretext
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
                           hintText: "Enter your Password",
                           hintStyle: TextStyle(color: Colors.black45),
                           border: InputBorder.none),
                     ),
                   ),
-                  SizedBox(height: size.height/25,),
+                  SizedBox(
+                    height: size.height / 25,
+                  ),
                   GestureDetector(
                     child: const Text(
                       'Forget Password',
@@ -133,22 +161,27 @@ class _LoginState extends State<Login> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => const ForgetPassword()),
-                              (route) => false);
+                          MaterialPageRoute(
+                              builder: (context) => const ForgetPassword()),
+                          (route) => false);
                     },
                   ),
-                  SizedBox(height: size.height/25,),
+                  SizedBox(
+                    height: size.height / 25,
+                  ),
                   GestureDetector(
                     onTap: () {
-                      if(emailcontroller.text=="admin" && passwordcontroller.text=="password")
-                        {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => AdminPanel()),
-                                  (route) => false);
-                        }
-                      else
-                     { userlogin(emailcontroller.text,passwordcontroller.text);}
+                      if (emailcontroller.text == "admin" &&
+                          passwordcontroller.text == "password") {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminPanel()),
+                            (route) => false);
+                      } else {
+                        userlogin(
+                            emailcontroller.text, passwordcontroller.text);
+                      }
                     },
                     child: Container(
                       height: 50,
@@ -166,7 +199,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-
                   ),
                 ],
               ),

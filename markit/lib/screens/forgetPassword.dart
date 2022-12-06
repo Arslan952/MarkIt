@@ -79,6 +79,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         return null;
                       },
                       decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.email_outlined,
+                        color: Colors.indigoAccent,),
                           hintText: "Enter your Email",
                           hintStyle: const TextStyle(color: Colors.black45),
                           border: InputBorder.none),

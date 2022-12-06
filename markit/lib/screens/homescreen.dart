@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:markit/screens/login.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:markit/screens/sidebarscreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,13 +15,350 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
+
   //To do List
   CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('User');
+      FirebaseFirestore.instance.collection('User');
+
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        key: scaffoldkey,
+        drawer:SideBarScreen(),
+        body: StreamBuilder<DocumentSnapshot>(
+            stream: usersCollection.doc(user?.uid).snapshots(),
+            builder: (context, streamSnapshot) {
+              if (streamSnapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Color(0xffff928e),
+                  color: Color(0xff7d91f4),
+                ));
+              }
+              return Column(
+                children: [
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: ()=>scaffoldkey.currentState?.openDrawer(),
+                            child: Card(
+                              color: const Color(0xffe7f0fa),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              shadowColor: Colors.black,
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  LineAwesomeIcons.stream,
+                                  color: Color(0xff1f59da),
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            'Profile',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: Colors.black87),
+                          ),
+                          Card(
+                            color: const Color(0xffe7f0fa),
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            shadowColor: Colors.black,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: const [
+                                  Icon(
+                                    Icons.notifications,
+                                    color: Color(0xff1f59da),
+                                    size: 30,
+                                  ),
+                                  Positioned(
+                                    top: 3,
+                                    right: 1,
+                                    child: Icon(
+                                      Icons.brightness_1,
+                                      color: Colors.red,
+                                      size: 12,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: Card(
+                        elevation: 3,
+                        shadowColor: const Color(0xff6799e2),
+                        color: const Color(0xffe7f0fa),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    streamSnapshot.data!['image'],
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 40,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Welcome Back",
+                                      style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20,
+                                              color: Colors.black26)),
+
+                                      /* TextStyle(fontSize: 22, fontWeight: FontWeight.bold),*/
+                                    ),
+                                    Text(
+                                      streamSnapshot.data!['firstname'] +
+                                          " " +
+                                          streamSnapshot.data!['lastname'],
+                                      style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20,
+                                              color: Colors.black87)),
+
+                                      /* TextStyle(fontSize: 22, fontWeight: FontWeight.bold),*/
+                                    ),
+                                    Text(
+                                      streamSnapshot.data!['userid'],
+                                      style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 15,
+                                              color: Colors.black87)),
+
+                                      /* TextStyle(fontSize: 22, fontWeight: FontWeight.bold),*/
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Card(
+                          elevation: 10,
+                          color: const Color(0xff1f59da),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 25,
+                                left: 25,
+                                child: Card(
+                                  color: const Color(0xffe7f0fa),
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  shadowColor: Colors.black,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      LineAwesomeIcons.barcode,
+                                      color: Color(0xff1f59da),
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Positioned(
+                                  bottom: 18,
+                                  left: 18,
+                                  child: Text(
+                                    'Scan QR Code',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Card(
+                          elevation: 10,
+                          color: const Color(0xffe7f0fa),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 25,
+                                left: 25,
+                                child: Card(
+                                  color: const Color(0xff1f59da),
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  shadowColor: Colors.black,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      LineAwesomeIcons.camera,
+                                      color: Color(0xffe7f0fa),
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Positioned(
+                                  bottom: 18,
+                                  left: 18,
+                                  child: Text(
+                                    'Scan QR Code',
+                                    style: TextStyle(
+                                        color: Color(0xff1f59da),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Card(
+                          elevation: 10,
+                          color: const Color(0xffe7f0fa),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 25,
+                                left: 25,
+                                child: Card(
+                                  color: const Color(0xff1f59da),
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  shadowColor: Colors.black,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      LineAwesomeIcons.camera,
+                                      color: Color(0xffe7f0fa),
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Positioned(
+                                  bottom: 18,
+                                  left: 18,
+                                  child: Text(
+                                    'Scan QR Code',
+                                    style: TextStyle(
+                                        color: Color(0xff1f59da),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Card(
+                          elevation: 10,
+                          color: const Color(0xff1f59da),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 25,
+                                left: 25,
+                                child: Card(
+                                  color: const Color(0xffe7f0fa),
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  shadowColor: Colors.black,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      LineAwesomeIcons.barcode,
+                                      color: Color(0xff1f59da),
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Positioned(
+                                  bottom: 18,
+                                  left: 18,
+                                  child: Text(
+                                    'Scan QR Code',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              );
+            }));
+  }
+}
+/*Scaffold(
       body: Stack(
         children: [
           // Container(
@@ -83,46 +422,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                             CircleAvatar(
-                              radius: 32,
-                              backgroundImage:NetworkImage( streamSnapshot.data!['image'],)
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children:  [
-                                  Text(
-                                 streamSnapshot.data!['firstname'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                    streamSnapshot.data!['userid'],
-                                    style: const TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
                         IconButton(
 
                           color: Colors.white,
+
                           onPressed: () {
-                            onPressed: () async {
-                              await FirebaseAuth.instance.signOut();
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
-                            };
+                            FirebaseAuth.instance.signOut();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login()),
+                            );
                           },
-                          icon: const Icon(Icons.exit_to_app),
-                           )
+
+                          icon: const Icon(LineAwesomeIcons.list),
+                        ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 55,
+                              backgroundColor: Colors.white,
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundImage:NetworkImage( streamSnapshot.data!['image'],),
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  [
+                                Text(
+                               streamSnapshot.data!['firstname']+" "+streamSnapshot.data!['lastname'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      color: Colors.white),
+                                ),
+                                Text(
+                                  streamSnapshot.data!['userid'],
+                                  style: const TextStyle(
+                                      fontSize: 13, color: Colors.white),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+
                       ],
                     );
                       }
@@ -338,6 +683,4 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-    );
-  }
-}
+    );*/
