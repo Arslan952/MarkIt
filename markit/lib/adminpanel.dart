@@ -216,56 +216,6 @@ class _AdminPanelState extends State<AdminPanel> {
                             ],
                           ),
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          elevation: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                image: AssetImage("assets/qrcode.png"),
-                                height: 128,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "QR Code Scan",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          elevation: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                image: AssetImage("assets/qrcode.png"),
-                                height: 128,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "QR Code Scan",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   )
