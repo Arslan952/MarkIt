@@ -179,7 +179,7 @@ class _UserDataState extends State<UserData> {
 
                  ),
                ),
-               SizedBox(
+               const SizedBox(
                  height: 15,
                ),
              SizedBox(

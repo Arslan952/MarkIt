@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:markit/screens/Userdata.dart';
+import 'package:markit/screens/login.dart';
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
 
@@ -94,7 +95,10 @@ class _AdminPanelState extends State<AdminPanel> {
                           color: Colors.white,
                           onPressed: () {
                             onPressed: () async {
-
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Login()),
+                              );
                             };
                           },
                           icon: Icon(Icons.exit_to_app),
@@ -174,14 +178,14 @@ class _AdminPanelState extends State<AdminPanel> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Image(
-                                image: AssetImage("assets/qrcode.png"),
+                                image: AssetImage("assets/bell.png"),
                                 height: 128,
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                "QR Code Scan",
+                                "Notification",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -199,14 +203,14 @@ class _AdminPanelState extends State<AdminPanel> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Image(
-                                image: AssetImage("assets/qrcode.png"),
+                                image: AssetImage("assets/writing.png"),
                                 height: 128,
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                "QR Code Scan",
+                                "Application ",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,

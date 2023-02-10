@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:markit/screens/login.dart';
 class SideBarScreen extends StatelessWidget {
   const SideBarScreen({Key? key}) : super(key: key);
 
@@ -40,13 +41,19 @@ class SideBarScreen extends StatelessWidget {
               title: Text("Home"),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
-            ListTile(leading: Icon(Icons.home),
-              title: Text("Home"),
+            ListTile(leading: Icon(Icons.person),
+              title: Text("Profile"),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
-            ListTile(leading: Icon(Icons.home),
-              title: Text("Home"),
+            ListTile(leading: Icon(Icons.exit_to_app),
+              title: Text("Logout"),
               trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
             )
           ],
         ),

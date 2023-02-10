@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:markit/screens/adduser.dart';
 
 import 'Userdata.dart';
 
@@ -25,24 +24,23 @@ class _UpdateUserState extends State<UpdateUser> {
       body: SafeArea(
           child: SingleChildScrollView(
               child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future:
-            FirebaseFirestore.instance.collection('User').doc(widget.id).get(),
-        builder: (_, snapshot) {
-          if (snapshot.hasError) {
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+                  future:
+                   FirebaseFirestore.instance.collection('User').doc(widget.id).get(),
+                   builder: (_, snapshot) {
+                     if (snapshot.hasError) {}
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
                 child: CircularProgressIndicator(
-              backgroundColor: Color(0xffff928e),
-              color: Color(0xff7d91f4),
-            ));
-          }
-          var data = snapshot.data?.data();
-          var name = data!['firstname'];
-          var lname = data['lastname'];
-          var userid = data['userid'];
-          var email = data['email'];
-          return Column(
+                     backgroundColor: Color(0xffff928e),
+                    color: Color(0xff7d91f4),
+                      ));
+                }
+                  var data = snapshot.data?.data();
+                 var name = data!['firstname'];
+                  var lname = data['lastname'];
+               var userid = data['userid'];
+                var email = data['email'];
+                  return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(15),
@@ -59,9 +57,9 @@ class _UpdateUserState extends State<UpdateUser> {
                       "Update User",
                       style: GoogleFonts.poppins(
                           textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          )),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )),
                     ),
                     IconButton(
                       onPressed: () {
@@ -72,7 +70,6 @@ class _UpdateUserState extends State<UpdateUser> {
                       },
                       icon: Icon(
                         isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon,
-
                       ),
                     ),
                   ],
@@ -82,9 +79,8 @@ class _UpdateUserState extends State<UpdateUser> {
                 key: key,
                 child: Column(
                   children: [
-
                     Padding(
-                      padding: const EdgeInsets.only(left: 25,right: 25),
+                      padding: const EdgeInsets.only(left: 25, right: 25),
                       child: TextFormField(
                         initialValue: name,
                         textInputAction: TextInputAction.next,
@@ -101,12 +97,12 @@ class _UpdateUserState extends State<UpdateUser> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100)),
                             floatingLabelStyle:
-                            TextStyle(color: Colors.indigoAccent),
+                                TextStyle(color: Colors.indigoAccent),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                                 borderSide: BorderSide(
                                     width: 2, color: Colors.indigoAccent))),
-                       /* decoration: InputDecoration(
+                        /* decoration: InputDecoration(
                             labelText: "First Name",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),*/
@@ -116,7 +112,7 @@ class _UpdateUserState extends State<UpdateUser> {
                       height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 25,right: 25),
+                      padding: const EdgeInsets.only(left: 25, right: 25),
                       child: TextFormField(
                         initialValue: lname,
                         textInputAction: TextInputAction.next,
@@ -133,12 +129,12 @@ class _UpdateUserState extends State<UpdateUser> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100)),
                             floatingLabelStyle:
-                            TextStyle(color: Colors.indigoAccent),
+                                TextStyle(color: Colors.indigoAccent),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                                 borderSide: BorderSide(
                                     width: 2, color: Colors.indigoAccent))),
-                       /* decoration: InputDecoration(
+                        /* decoration: InputDecoration(
                             labelText: "Last Name",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),*/
@@ -148,7 +144,7 @@ class _UpdateUserState extends State<UpdateUser> {
                       height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 25,right: 25),
+                      padding: const EdgeInsets.only(left: 25, right: 25),
                       child: TextFormField(
                         initialValue: userid,
                         textInputAction: TextInputAction.next,
@@ -162,16 +158,16 @@ class _UpdateUserState extends State<UpdateUser> {
                         decoration: InputDecoration(
                             label: Text("User ID"),
                             prefixIcon:
-                            Icon(LineAwesomeIcons.identification_card),
+                                Icon(LineAwesomeIcons.identification_card),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100)),
                             floatingLabelStyle:
-                            TextStyle(color: Colors.indigoAccent),
+                                TextStyle(color: Colors.indigoAccent),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                                 borderSide: BorderSide(
                                     width: 2, color: Colors.indigoAccent))),
-                       /* decoration: InputDecoration(
+                        /* decoration: InputDecoration(
                             labelText: "User Id",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),*/
@@ -181,7 +177,7 @@ class _UpdateUserState extends State<UpdateUser> {
                       height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 25,right: 25),
+                      padding: const EdgeInsets.only(left: 25, right: 25),
                       child: TextFormField(
                         initialValue: email,
                         textInputAction: TextInputAction.done,
@@ -200,7 +196,7 @@ class _UpdateUserState extends State<UpdateUser> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100)),
                             floatingLabelStyle:
-                            TextStyle(color: Colors.indigoAccent),
+                                TextStyle(color: Colors.indigoAccent),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                                 borderSide: BorderSide(
@@ -215,10 +211,10 @@ class _UpdateUserState extends State<UpdateUser> {
                       height: 25,
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width*0.50,
+                      width: MediaQuery.of(context).size.width * 0.50,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed:() async {
+                          onPressed: () async {
                             try {
                               FirebaseFirestore.instance
                                   .collection('User')
@@ -229,9 +225,7 @@ class _UpdateUserState extends State<UpdateUser> {
                                 'userid': userid,
                                 'email': email,
                               });
-                            } catch (e) {
-
-                            }
+                            } catch (e) {}
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
@@ -239,14 +233,15 @@ class _UpdateUserState extends State<UpdateUser> {
                               backgroundColor: Colors.blue,
                               shadowColor: Colors.indigo,
                               side: BorderSide.none,
-                              shape: StadiumBorder()
-                          ),
-                          child:Text("Save",style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500
-                          ),)),
+                              shape: StadiumBorder()),
+                          child: Text(
+                            "Save",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          )),
                     ),
-                 /*   GestureDetector(
+                    /*   GestureDetector(
                       onTap: () async {
                         try {
                           FirebaseFirestore.instance
