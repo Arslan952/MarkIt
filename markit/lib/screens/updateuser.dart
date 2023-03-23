@@ -40,7 +40,7 @@ class _UpdateUserState extends State<UpdateUser> {
                   var lname = data['lastname'];
                var userid = data['userid'];
                 var email = data['email'];
-                  return Column(
+                  return lumn(
             children: [
               Padding(
                 padding: const EdgeInsets.all(15),
