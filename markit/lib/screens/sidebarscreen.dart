@@ -37,17 +37,17 @@ class SideBarScreen extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(streamSnapshot.data!['image'],),
               ),),
-            ListTile(leading: Icon(Icons.home),
+            const ListTile(leading: Icon(Icons.home),
               title: Text("Home"),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
-            ListTile(leading: Icon(Icons.person),
+            const ListTile(leading: Icon(Icons.person),
               title: Text("Profile"),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
-            ListTile(leading: Icon(Icons.exit_to_app),
+            ListTile(leading: const Icon(Icons.exit_to_app),
               title: Text("Logout"),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: (){
                 Navigator.push(
                   context,
