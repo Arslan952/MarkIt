@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:markit/screens/camera_screen.dart';
+import 'package:markit/screens/leave_page.dart';
 import 'package:markit/screens/sidebarscreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -244,47 +248,52 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Card(
-                          elevation: 10,
-                          color: const Color(0xffe7f0fa),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32)),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 25,
-                                left: 25,
-                                child: Card(
-                                  color: const Color(0xff1f59da),
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  shadowColor: Colors.black,
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      LineAwesomeIcons.neutral_face,
-                                      color: Color(0xffe7f0fa),
-                                      size: 30,
+                      InkWell(
+                        onTap: (){
+                          Get.to(CameraScreen());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Card(
+                            elevation: 10,
+                            color: const Color(0xffe7f0fa),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32)),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: 25,
+                                  left: 25,
+                                  child: Card(
+                                    color: const Color(0xff1f59da),
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    shadowColor: Colors.black,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        LineAwesomeIcons.neutral_face,
+                                        color: Color(0xffe7f0fa),
+                                        size: 30,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Positioned(
-                                  bottom: 40,
-                                  left: 18,
-                                  child: Text(
-                                    'Scan Face',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color: Color(0xff1f59da),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ))
-                            ],
+                                const Positioned(
+                                    bottom: 40,
+                                    left: 18,
+                                    child: Text(
+                                      'Scan Face',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: Color(0xff1f59da),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -331,46 +340,51 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Card(
-                          elevation: 10,
-                          color: const Color(0xff1f59da),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32)),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 25,
-                                left: 25,
-                                child: Card(
-                                  color: const Color(0xffe7f0fa),
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  shadowColor: Colors.black,
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.note_alt_rounded,
-                                      color: Color(0xff1f59da),
-                                      size: 30,
+                      InkWell(
+                        onTap: (){
+                          Get.to(LeaveApplicationForm());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Card(
+                            elevation: 10,
+                            color: const Color(0xff1f59da),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32)),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: 25,
+                                  left: 25,
+                                  child: Card(
+                                    color: const Color(0xffe7f0fa),
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    shadowColor: Colors.black,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.note_alt_rounded,
+                                        color: Color(0xff1f59da),
+                                        size: 30,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Positioned(
-                                  bottom: 40,
-                                  left: 18,
-                                  child: Text(
-                                    'Write\n Application',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ))
-                            ],
+                                const Positioned(
+                                    bottom: 40,
+                                    left: 18,
+                                    child: Text(
+                                      'Write\n Application',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
                       ),

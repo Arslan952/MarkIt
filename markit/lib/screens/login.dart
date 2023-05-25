@@ -133,7 +133,7 @@ class _LoginState extends State<Login> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineAwesomeIcons.fingerprint,
+                        prefixIcon: const Icon(LineAwesomeIcons.fingerprint,
                         color: Colors.indigoAccent,),
                           suffixIcon: GestureDetector(
                             onTap: () {
