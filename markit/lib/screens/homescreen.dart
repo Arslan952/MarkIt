@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       /* TextStyle(fontSize: 22, fontWeight: FontWeight.bold),*/
                                     ),
                                     Text(
-                                      streamSnapshot.data!['userid'],
+                                      streamSnapshot.data!['userid'].toString(),
                                       style: GoogleFonts.poppins(
                                           textStyle: const TextStyle(
                                               fontWeight: FontWeight.w600,
