@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:markit/adminpanel.dart';
 import 'package:markit/screens/forgetPassword.dart';
+import 'package:markit/screens/homescreen2.dart';
 
 import 'homescreen.dart';
 
@@ -33,7 +34,7 @@ class _LoginState extends State<Login> {
             .signInWithEmailAndPassword(email: email, password: password);
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const HomeScreen2()),
             (route) => false);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {

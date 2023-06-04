@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -31,9 +32,37 @@ class _CameraScreenState extends State<CameraScreen> {
       print('Base64 Image: $_base64Image');
     }
   }
+  void updateAttendanceStatus() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      final collection = FirebaseFirestore.instance.collection('User');
 
-  @override
-  @override
+      final document = await collection.doc(user!.uid).get();
+      final attendanceList = List<Map<String, dynamic>>.from(document.data()!['attendance'] ?? []);
+      final now = DateTime.now();
+
+      for (int i = 0; i < attendanceList.length; i++) {
+        final attendanceDate = attendanceList[i]['date'].toDate();
+
+        if (attendanceDate.year == now.year &&
+            attendanceDate.month == now.month &&
+            attendanceDate.day == now.day) {
+          // Update the 'status' field within the matching map
+          attendanceList[i]['status'] = true;
+          break;
+        }
+      }
+
+      await collection.doc(user.uid).update({'attendance': attendanceList});
+      print('Attendance status updated successfully.');
+      Get.to(Marked());
+    } catch (e) {
+      print('Error updating attendance status: $e');
+      Get.to(NotMarked());
+    }
+  }
+    @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -89,7 +118,7 @@ class _CameraScreenState extends State<CameraScreen> {
               height: 20,
             ),
             InkWell(
-              onTap: () async {
+              onTap: ()async {
                 print("hello");
                 try {
                   final response = await post(
@@ -103,23 +132,12 @@ class _CameraScreenState extends State<CameraScreen> {
                     var data = jsonDecode(response.body.toString());
                     if(data['message']=="sucess")
                       {
-                        Get.to(const Marked());
+                       updateAttendanceStatus();
                       }
                       else if(data['id']=="Not in database"||data['id']=="Invalid Image")
                         {
                           Get.to(const NotMarked());
                         }
-                    final CollectionReference collection =
-                        FirebaseFirestore.instance.collection('getid');
-                    collection.add({
-                      'timestamp': DateTime.now(),
-                      'uid': data['id']
-                      // Add more fields as needed
-                    }).then((DocumentReference document) {
-                      print('Data saved successfully with ID: ${document.id}');
-                    }).catchError((error) {
-                      print('Failed to save data: $error');
-                    });
                     print(response.body);
                     print("Done");
                   } else {
