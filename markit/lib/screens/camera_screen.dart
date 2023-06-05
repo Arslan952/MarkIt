@@ -12,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:markit/screens/notmarked.dart';
 import 'package:markit/screens/successpage.dart';
 
+import 'attendance_already.dart';
+
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -19,6 +21,8 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   String? _base64Image;
+  bool isloading=false;
+
 
   Future<void> _captureAndConvertToBase64() async {
     final pickedImage =
@@ -40,6 +44,7 @@ class _CameraScreenState extends State<CameraScreen> {
       final document = await collection.doc(user!.uid).get();
       final attendanceList = List<Map<String, dynamic>>.from(document.data()!['attendance'] ?? []);
       final now = DateTime.now();
+      bool attendanceAlreadyMarked = false;
 
       for (int i = 0; i < attendanceList.length; i++) {
         final attendanceDate = attendanceList[i]['date'].toDate();
@@ -47,25 +52,56 @@ class _CameraScreenState extends State<CameraScreen> {
         if (attendanceDate.year == now.year &&
             attendanceDate.month == now.month &&
             attendanceDate.day == now.day) {
-          // Update the 'status' field within the matching map
-          attendanceList[i]['status'] = true;
+          if (attendanceList[i]['status'] == true) {
+            attendanceAlreadyMarked = true;
+          } else {
+            attendanceList[i]['status'] = true;
+          }
           break;
         }
       }
 
-      await collection.doc(user.uid).update({'attendance': attendanceList});
-      print('Attendance status updated successfully.');
-      Get.to(Marked());
+      if (attendanceAlreadyMarked) {
+        setState(() {
+          isloading=false;
+        });
+        Get.to(const Attendancealready());
+        print('Already marked.');
+
+      } else {
+        await collection.doc(user.uid).update({'attendance': attendanceList});
+        print('Attendance status updated successfully.');
+        setState(() {
+          isloading = false;
+        });
+        Get.to(Marked());
+      }
     } catch (e) {
+      setState(() {
+        isloading = false;
+      });
       print('Error updating attendance status: $e');
       Get.to(NotMarked());
     }
   }
-    @override
+
+  @override
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: isloading==true?
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Please be patient.....',style: TextStyle(fontSize: 18),),
+              SizedBox(height: 20,),
+              Center(child: CircularProgressIndicator(
+                backgroundColor: Color(0xffff928e),
+                color: Color(0xff7d91f4),
+              ),),
+            ],
+          ):
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -121,21 +157,29 @@ class _CameraScreenState extends State<CameraScreen> {
               onTap: ()async {
                 print("hello");
                 try {
+                  setState(() {
+                    isloading=true;
+                  });
                   final response = await post(
                     Uri.parse("http://192.168.10.3:5000/recognize"),
                     headers: {'Content-Type': 'application/json'},
-                    body: json.encode({
-                      "image": _base64Image
-                    }),
+                     body: json.encode(
+                       {
+                        'image' :_base64Image
+                       }
+                     )
                   );
                   if (response.statusCode == 200) {
                     var data = jsonDecode(response.body.toString());
-                    if(data['message']=="sucess")
+                    if(data['message']=="success")
                       {
                        updateAttendanceStatus();
                       }
                       else if(data['id']=="Not in database"||data['id']=="Invalid Image")
                         {
+                          setState(() {
+                            isloading=false;
+                          });
                           Get.to(const NotMarked());
                         }
                     print(response.body);

@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
-
 import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -132,7 +131,8 @@ class _HomeScreen2State extends State<HomeScreen2> {
                             onTap: (){
                               Get.to(LeaveApplicationForm());
                             },
-                            child: HomeCard(name: "Leave\n Application", icon: Icons.note_alt_outlined, color:Color(0xff6987F3)))
+                            child: HomeCard(name: "Leave\n Application", icon: Icons.note_alt_outlined, color:Color(0xff6987F3))),
+                        SizedBox(height: size.height*0.06,),
                       ],
                     ),
                   ),
