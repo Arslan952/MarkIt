@@ -243,7 +243,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
                             borderRadius: BorderRadius.circular(20)),
                         child: const Center(
                           child: Text(
-                            "Mark Attendance",
+                            "Submit Leave",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
