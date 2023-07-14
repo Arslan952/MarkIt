@@ -82,7 +82,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         prefixIcon: Icon(Icons.email_outlined,
                         color: Colors.indigoAccent,),
                           hintText: "Enter your Email",
-                          hintStyle: const TextStyle(color: Colors.black45),
+                          hintStyle: TextStyle(color: Colors.black45),
                           border: InputBorder.none),
                     ),
                   ),
