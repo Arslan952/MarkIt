@@ -161,7 +161,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     isloading=true;
                   });
                   final response = await post(
-                    Uri.parse("http://192.168.26.51:5000/recognize"),
+                    Uri.parse("http://192.168.1.26:5000/recognize"),
                     headers: {'Content-Type': 'application/json'},
                      body: json.encode(
                        {
